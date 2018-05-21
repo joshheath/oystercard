@@ -24,9 +24,8 @@ describe Oystercard do
   end
 
   context "#deduct" do
-    it 'deducts the fare from my card' do
-      expect(subject.deduct(1)).to respond_to(1).argument
-    end
+    it { is_expected.to respond_to(:deduct).with(1).argument }
   end
+
 
 end
