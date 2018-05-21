@@ -17,4 +17,10 @@ describe Oystercard do
     end
   end
 
+  context "#deduct" do
+    it 'deducts the fare from my card' do
+      expect(subject.deduct(1)).to respond_to(1).argument
+    end
+  end
+
 end
