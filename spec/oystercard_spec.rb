@@ -1,6 +1,15 @@
 require 'oystercard'
 
 describe Oystercard do
+
+  context '#initialize' do
+    it 'starts with a balance of zero' do
+      expect(subject.balance).to be == 0
+    end
+  end
+
+
+
   context "#balance" do
     it "Return the current balance" do
       card = Oystercard.new
@@ -26,7 +35,16 @@ describe Oystercard do
       subject.top_up(20)
       expect { subject.deduct 3}.to change{ subject.balance }.by -3
     end
-
   end
+
+  context "#in_journey?" do
+  it 'knows when it\'s in use' do
+    expect(subject).not_to be_in_journey
+  end
+  it 'can touch in' do
+    subject.touch_in
+    expect(subject).to be_in_journey
+  end
+end
 
 end

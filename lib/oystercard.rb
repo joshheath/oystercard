@@ -18,4 +18,12 @@ def deduct(amount)
   @balance -= amount
 end
 
+def in_journey?
+  false
+end
+
+def touch_in
+  @touch_in
+end
+
 end
