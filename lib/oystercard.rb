@@ -8,5 +8,9 @@ def initialize(balance = DEFAULT_BALANCE)
   @balance = balance
 end
 
+def top_up(amount)
+  @balance = @balance + amount
+end
+
 
 end
