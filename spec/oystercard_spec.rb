@@ -2,6 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
   let(:min_balance) { described_class::MINIMUM_BALANCE }
+  let(:min_fare) { described_class::MINIMUM_FARE }
 
   context '#initialize' do
     it 'starts with a balance of zero' do
@@ -68,7 +69,7 @@ describe Oystercard do
       subject.top_up(10)
       subject.touch_in
       subject.touch_out
-      expect { subject.touch_out }.to change { subject.balance }.by -2
+      expect { subject.touch_out }.to change { subject.balance }.by min_fare
     end
   end
 end
