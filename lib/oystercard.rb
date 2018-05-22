@@ -4,6 +4,7 @@ attr_reader :balance
 
 MAXIMUM_BALANCE = 90
 MINIMUM_BALANCE = 1
+MINIMUM_FARE = 2
 
 def initialize
   @balance = 0
@@ -30,6 +31,7 @@ end
 
 def touch_out
   @journey = false
+  @balance -= MINIMUM_FARE
 end
 
 end

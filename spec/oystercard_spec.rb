@@ -42,6 +42,7 @@ describe Oystercard do
     it 'knows when it\'s in use' do
       expect(subject).not_to be_in_journey
     end
+  end
 
     context 'touch in' do
       it 'can touch in' do
@@ -55,11 +56,19 @@ describe Oystercard do
       end
     end
 
+  context 'touch out' do
     it 'can touch out' do
-      subject.top_up(Oystercard::MINIMUM_BALANCE + 1)
+      subject.top_up(10)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
+    end
+
+    it 'reduces the card balance by minimum fare' do
+      subject.top_up(10)
+      subject.touch_in
+      subject.touch_out
+      expect { subject.touch_out }.to change { subject.balance }.by -2
     end
   end
 end
