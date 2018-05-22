@@ -1,6 +1,7 @@
 require 'oystercard'
 
 describe Oystercard do
+  let(:min_balance) { described_class::MINIMUM_BALANCE }
 
   context '#initialize' do
     it 'starts with a balance of zero' do
@@ -18,7 +19,9 @@ describe Oystercard do
 
   context "#top_up" do
     it 'can top up the balance' do
-      expect { subject.top_up 1 }.to change{ subject.balance }.by 1
+      top_up_amount = Oystercard::MINIMUM_BALANCE
+      subject.top_up(top_up_amount)
+      expect(subject.balance).to eq 1
     end
 
     it "raises an error if the maximum balance is exceeded" do
@@ -40,12 +43,20 @@ describe Oystercard do
       expect(subject).not_to be_in_journey
     end
 
-    it 'can touch in' do
-      subject.touch_in
-      expect(subject).to be_in_journey
+    context 'touch in' do
+      it 'can touch in' do
+        subject.top_up(Oystercard::MINIMUM_BALANCE + 1)
+        subject.touch_in
+        expect(subject).to be_in_journey
+      end
+
+      it 'raises an error if balance is less than minimum' do
+        expect{ subject.touch_in }.to raise_error "balance is below £#{Oystercard::MINIMUM_BALANCE}"
+      end
     end
 
     it 'can touch out' do
+      subject.top_up(Oystercard::MINIMUM_BALANCE + 1)
       subject.touch_in
       subject.touch_out
       expect(subject).not_to be_in_journey
