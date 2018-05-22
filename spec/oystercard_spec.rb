@@ -8,8 +8,6 @@ describe Oystercard do
     end
   end
 
-
-
   context "#balance" do
     it "Return the current balance" do
       card = Oystercard.new
@@ -38,13 +36,19 @@ describe Oystercard do
   end
 
   context "#in_journey?" do
-  it 'knows when it\'s in use' do
-    expect(subject).not_to be_in_journey
-  end
-  it 'can touch in' do
-    subject.touch_in
-    expect(subject).to be_in_journey
-  end
-end
+    it 'knows when it\'s in use' do
+      expect(subject).not_to be_in_journey
+    end
 
+    it 'can touch in' do
+      subject.touch_in
+      expect(subject).to be_in_journey
+    end
+
+    it 'can touch out' do
+      subject.touch_in
+      subject.touch_out
+      expect(subject).not_to be_in_journey
+    end
+  end
 end
