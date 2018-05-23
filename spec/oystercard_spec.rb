@@ -1,7 +1,8 @@
 require 'oystercard'
 
 describe Oystercard do
-  let(:station) { double :station }
+  let(:entry_station) { double :station }
+  let(:exit_station) { double :station }
   let(:min_balance) { described_class::MINIMUM_BALANCE }
   let(:min_fare) { described_class::MINIMUM_FARE }
 
@@ -42,42 +43,42 @@ describe Oystercard do
     context 'touch in' do
       it 'can touch in' do
         subject.top_up(min_balance + 1)
-        subject.touch_in(station)
+        subject.touch_in(entry_station)
         expect(subject).to be_in_journey
       end
 
       it 'raises an error if balance is less than minimum' do
-        expect{ subject.touch_in(station) }.to raise_error "balance is below £#{Oystercard::MINIMUM_BALANCE}"
+        expect{ subject.touch_in(entry_station) }.to raise_error "balance is below £#{Oystercard::MINIMUM_BALANCE}"
       end
     end
 
   context 'touch out' do
     it 'can touch out' do
       subject.top_up(10)
-      subject.touch_in(station)
-      subject.touch_out
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
       expect(subject).not_to be_in_journey
     end
 
     it 'reduces the card balance by minimum fare' do
       subject.top_up(10)
-      subject.touch_in(station)
-      expect { subject.touch_out }.to change { subject.balance }.by -min_fare
+      subject.touch_in(entry_station)
+      expect { subject.touch_out(exit_station) }.to change { subject.balance }.by -min_fare
     end
   end
 
-  it 'stores the entry station' do
-    subject.top_up(4)
-    subject.touch_in(station)
-    expect(subject.entry_station).to eq station
+  context 'card is already on a journey' do
+    it 'stores the entry station' do
+      subject.top_up(4)
+      subject.touch_in(entry_station)
+      expect(subject.entry_station).to eq entry_station
+    end
+
+    it 'stores exit station' do
+      subject.top_up(4)
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      expect(subject.exit_station).to eq exit_station
+    end
   end
 end
-
-# private
-#
-# context "#deduct" do
-#   it 'deducts an amount from the balance' do
-#     subject.top_up(20)
-#     expect { subject.deduct 3}.to change{ subject.balance }.by -3
-#   end
-# end

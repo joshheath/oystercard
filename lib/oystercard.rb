@@ -10,7 +10,6 @@ MINIMUM_FARE = 2
 
 def initialize
   @balance = 0
-  # @journey = false
   @entry_station = nil
 end
 
@@ -23,20 +22,23 @@ def in_journey?
   !!entry_station
 end
 
-def touch_in(station)
+def touch_in(entry_station)
   fail "balance is below £#{MINIMUM_BALANCE}" if @balance < MINIMUM_BALANCE
-  @entry_station = station
-  # @journey = true
+  @entry_station = entry_station
 end
 
-def touch_out
+def touch_out(exit_station)
   deduct(MINIMUM_FARE)
-  # @journey = false
+  @exit_station = exit_station
   @entry_station = nil
 end
 
 def entry_station
   @entry_station
+end
+
+def exit_station
+  @exit_station
 end
 
 private
