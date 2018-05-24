@@ -1,5 +1,5 @@
 class Journey
-PENALTY_FARE = 20
+PENALTY_FARE = 6
 attr_reader :entry_station
 
 def initialize(entry_station = "Dalston")
