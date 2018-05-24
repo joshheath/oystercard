@@ -12,7 +12,6 @@ def initialize
   @balance = 0
   @entry_station = nil
   @journeys = []
-
 end
 
 def top_up(amount)
