@@ -32,46 +32,47 @@ describe Oystercard do
 
     it "raises an error if the maximum balance is exceeded" do
       subject.top_up(max_balance)
-      expect{ subject.top_up(min_balance) }.to raise_error "maximum balance of #{max_balance} exceeded."
-    end
-  end
-
-  context "#in_journey?" do
-    before do
-      subject.top_up(10)
-      subject.touch_in(entry_station)
-    end
-
-    it 'stores the entry station' do
-      expect(subject.entry_station).to eq entry_station
-    end
-
-    it 'stores exit station' do
-      subject.touch_out(exit_station)
-      expect(subject.exit_station).to eq exit_station
-    end
-
-    # it 'has an empty list of journeys by default' do
-    #   expect(subject.journeys).to be_empty
-    # end
-
-    it 'stores a journey' do
-      subject.touch_out(exit_station)
-      expect(subject.journeys).to include journey
-    end
-
-    context 'touch out' do
-      it 'can touch out' do
-        subject.touch_out(exit_station)
-        expect(subject).not_to be_in_journey
-      end
-
-      it 'reduces the card balance by minimum fare' do
-        expect { subject.touch_out(exit_station) }.to change { subject.balance }.by -min_fare
-      end
+      expect{ subject.top_up(min_balance) }.to raise_error "maximum balance of £#{max_balance} exceeded."
     end
   end
 end
+
+  # context "#in_journey?" do
+  #   before do
+  #     subject.top_up(10)
+  #     subject.touch_in(entry_station)
+  #   end
+  #
+  #   it 'stores the entry station' do
+  #     expect(subject.entry_station).to eq entry_station
+  #   end
+  #
+  #   it 'stores exit station' do
+  #     subject.touch_out(exit_station)
+  #     expect(subject.exit_station).to eq exit_station
+  #   end
+  #
+  #   it 'has an empty list of journeys by default' do
+  #     expect(subject.journeys).to be_empty
+  #   end
+  #
+  #   it 'stores a journey' do
+  #     subject.touch_out(exit_station)
+  #     expect(subject.journeys).to include journey
+  #   end
+
+  # context 'touch out' do
+  #   it 'can touch out' do
+  #     subject.touch_out(exit_station)
+  #     # expect(subject).not_to be_in_journey
+  #   end
+
+    # it 'reduces the card balance by minimum fare' do
+    #   expect { subject.touch_out(exit_station) }.to change { subject.balance }.by -min_fare
+
+    # end
+  # end
+# end
 
 
     # it 'stores a journey' do

@@ -3,6 +3,7 @@ require 'journey'
 describe Journey do
   let(:station) { double :station, zone: 1}
   let(:penalty) { described_class::PENALTY_FARE }
+  let(:standard) { described_class::STANDARD_FARE }
 
   it 'knows if a journey is not complete' do
     expect(subject).not_to be_complete
@@ -28,14 +29,14 @@ describe Journey do
     end
 
     context 'given an exit station' do
-      let(:other_station) { double :other_station}
+      let(:exit_station) { double :exit_station}
 
       before do
-        subject.finish(other_station)
+        subject.finish(exit_station)
       end
 
       it 'calculates a fare' do
-        expect(subject.fare).to eq 1
+        expect(subject.fare).to eq standard
       end
 
       it 'knows if a journey is complete' do
