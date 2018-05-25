@@ -6,10 +6,3 @@ attr_reader :name, :zone
     @zone = zone
   end
 end
-  # def name
-  #   @name = "Old Street"
-  # end
-  #
-  # def zone
-  #   @zone = 1
-  # end

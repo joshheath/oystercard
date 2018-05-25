@@ -10,7 +10,7 @@ describe Journey do
   end
 
   it 'has a penalty fare by default' do
-    expect(subject.penalty_fare).to eq penalty
+    expect(subject.charge).to eq penalty
   end
 
   it 'returns itself when exiting a journey' do
@@ -25,7 +25,7 @@ describe Journey do
     end
 
     it 'returns a penalty fare if no exit station given' do
-      expect(subject.penalty_fare).to eq penalty
+      expect(subject.charge).to eq penalty
     end
 
     context 'given an exit station' do

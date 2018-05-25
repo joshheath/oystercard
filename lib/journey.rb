@@ -1,12 +1,13 @@
 class Journey
 STANDARD_FARE = 1
 PENALTY_FARE = 6
-attr_reader :entry_station
+attr_reader :entry_station, :charge
 
 def initialize(entry_station = "Victoria")
   @entry_station = entry_station
   @journeys = []
   @journeys << {entry_station: entry_station, exit_station: nil}
+  @charge = PENALTY_FARE
 end
 
 def finish(exit_station)
@@ -21,10 +22,12 @@ def complete?
 end
 
 def fare
-  STANDARD_FARE
+  if complete?
+    @charge = STANDARD_FARE
+  else
+    @charge = PENALTY_FARE
+  end
+    return @charge
 end
 
-def penalty_fare
-  PENALTY_FARE
-end
 end
